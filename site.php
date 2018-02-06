@@ -17,7 +17,7 @@ class hunter_mallModuleSite extends WeModuleSite
 	array('title' => '管理后台', 'icon' => 'fa fa-shopping-cart', 'url' => webUrl())
 	);
 	}
-
+  
 	public function doWebWeb()
 	{
 		m('route')->run();
