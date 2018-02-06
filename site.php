@@ -23,7 +23,7 @@ class hunter_mallModuleSite extends WeModuleSite
 		m('route')->run();
 	}
 	public function doWebDetail()
-	{
+	{ 
 		global $_GPC,$_W;
 		$data=pdo_fetch('select * from '.tablename('ewei_shop_member').' where id=:id and uniacid=:uni limit 1 ',array(':id'=>$_GPC['id'],':uni'=>$_W['uniacid']));
 		$data['com_total']=number_format($data['com_total'],2);
