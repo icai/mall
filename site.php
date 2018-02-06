@@ -69,7 +69,7 @@ class hunter_mallModuleSite extends WeModuleSite
 	{
 		m('route')->run(false);
 	}
-	
+	  
 	public function payResult($params)
 	{
 		return m('order')->payResult($params);
