@@ -78,7 +78,7 @@
             <th style="width:60px;">商品</th>
             <th  style="width:100px;">&nbsp;</th>
 
-            <th style="width:70px;" >价格/商品返利</th>
+            <th style="width:90px;" >价格/商品返利/团队业绩返利</th>
             <th style="width:70px;" >库存</th>
             <th style="width:80px;" >销量</th>
             {if $goodsfrom!='cycle'}
@@ -140,7 +140,7 @@
                 {else}
                 {$item['marketprice']}/{$item['profit']}
                 {/if}{/if}
-               </td></tr><tr> <td>{$item['profit']}</td></tr></table>
+               </td></tr><tr> <td>{$item['profit']}</td></tr><tr> <td>{$item['com']}</td></tr></table>
             </td>
 
             <td>

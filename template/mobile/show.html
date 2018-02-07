@@ -53,7 +53,7 @@
     </div>
     <div class="layui-col-xs2 layui-col-xs-offset5">
       <div style="height: 5px;"></div>
-      <button class="layui-btn layui-btn-radius layui-bg-red layui-btn-sm" style="width: 80%;" onclick="withdraw_p()">申请兑换</button>
+      <button class="layui-btn layui-btn-radius layui-bg-red layui-btn-sm" style="width: 80%;" onclick="withdraw_p()">提现</button>
     </div>
   </div>
   <div style="height: 20px;border-bottom: 2px solid gray;"></div>
@@ -73,12 +73,21 @@
   <div class="layui-row">
     <div class="layui-col-xs5">
       可提现团队业绩奖励<br>
-      <font size="4em">{$data['com_total']}</font>
+      <font size="4em">{$data['com2_total']}</font>
     </div>
     <div class="layui-col-xs2 layui-col-xs-offset5">
       <div style="height: 5px;"></div>
-      <button class="layui-btn layui-btn-radius layui-bg-red layui-btn-sm" style="width: 80%;" onclick="withdraw_c()">申请兑换</button>
+      <button class="layui-btn layui-btn-radius layui-bg-red layui-btn-sm" style="width: 80%;" onclick="withdraw_c()">提现</button>
     </div>
+  </div>
+  <div style="height: 20px;border-bottom: 2px solid gray;"></div>
+  <div style="height:10px;"></div>
+  <div class="layui-row">
+    <div class="layui-col-xs5">
+      团队总业绩<br>
+      <font size="6em">{$data['com_total']}</font>
+    </div>
+    
   </div>
   <div style="height: 20px;border-bottom: 2px solid gray;"></div>
   <blockquote class="layui-elem-quote" style="font-size: 1em;">备注：申请兑换后，可以将团队业绩和商品提成转为可提现佣金，需等待管理员后台审核。</blockquote>
@@ -126,7 +135,7 @@
         <div class="weui-cell__bd">
         <p>{$item['time']}</p>
         </div>
-        <div class="weui-cell__ft">申请兑换{$item['num']} <br><font color="orange" size="">审核中</font> </div>
+        <div class="weui-cell__ft">提现{if $item['type']==1}商品返利{/if}{if $item['type']==2}业绩返利{/if}{$item['num']}元 <br><font color="orange" size="">审核中</font> </div>
         </div>
         {/loop}
     </div>

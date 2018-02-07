@@ -22,6 +22,7 @@ class Cache_EweiShopV2Model
 	{
 		return $this->get($key, $uniacid);
 	}
+	//从文件中获取key对应的内容
 	public function get($key = '', $uniacid = '') 
 	{
 		return cache_read($this->get_key($key, $uniacid));

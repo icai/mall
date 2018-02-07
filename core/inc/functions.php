@@ -5,6 +5,7 @@ if (!defined('IN_IA'))
 }
 if (!function_exists('m')) 
 {
+	//core/model目录下某个文件的类
 	function m($name = '') 
 	{
 		static $_modules = array();

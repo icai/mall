@@ -22,6 +22,7 @@ class hunter_mallModuleSite extends WeModuleSite
 	{
 		m('route')->run();
 	}
+	//后台查看业绩详细信息页面
 	public function doWebDetail()
 	{ 
 		global $_GPC,$_W;
@@ -55,16 +56,7 @@ class hunter_mallModuleSite extends WeModuleSite
 		$result.='</ul>';
 		return $result;
 	}
-	public function doWebChange()
-	{
-		global $_GPC,$_W;
-		if($_GPC['status']=='1'){
-			include IA_ROOT . '/addons/hunter_mall/template/web/commission/status1.html';
-		}
-		else{
-		include $this->template('commission/status2');
-		}
-	}
+	
 	public function doMobileMobile()
 	{
 		m('route')->run(false);
@@ -74,17 +66,18 @@ class hunter_mallModuleSite extends WeModuleSite
 	{
 		return m('order')->payResult($params);
 	}
+	//移动端业绩提成页面
 	public function doMobileShow()
 	{	
 		global $_W,$_GPC;
-		$_W['openid']='oYnP20UyPqXsWNWpgp2_18UghPd4';
+		
 
 		if($_W['isajax']){
-			$nickname=pdo_fetchcolumn('select nickname from ims_ewei_shop_member where openid=:openid',array(':openid'=>$_W['openid']));
+			$nickname=pdo_fetchcolumn('select nickname from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_W['openid'],':uniacid'=>$_W['uniacid']));
 			pdo_insert('ewei_shop_withdraw',array('openid'=>$_W['openid'],'nickname'=>$nickname,'uniacid'=>$_W['uniacid'],'num'=>$_GPC['num'],'type'=>$_GPC['type'],'status'=>'0'));
-			$res=pdo_fetch('select com_total,profit_total,com_withdraw,profit_withdraw from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_W['openid'],':uniacid'=>$_W['uniacid']));
+			$res=pdo_fetch('select com2_total,profit_total,com2_withdraw,profit_withdraw from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_W['openid'],':uniacid'=>$_W['uniacid']));
 			if($_GPC['type']=0){
-			 pdo_update('ewei_shop_member',array('com_total'=>$res['com_total']-$_GPC['num'],'com_withdraw'=>$res['com_withdraw']+$_GPC['num']),array('openid'=>$_W['openid'],'uniacid'=>$_W['uniacid']));
+			 pdo_update('ewei_shop_member',array('com2_total'=>$res['com2_total']-$_GPC['num'],'com2_withdraw'=>$res['com2_withdraw']+$_GPC['num']),array('openid'=>$_W['openid'],'uniacid'=>$_W['uniacid']));
 
 			} 
 			else{
@@ -93,7 +86,7 @@ class hunter_mallModuleSite extends WeModuleSite
 			return ;
 		}
 		$data=pdo_fetch('select * from '.tablename('ewei_shop_member').' where openid=:openid and uniacid=:uni limit 1 ',array(':openid'=>$_W['openid'],':uni'=>$_W['uniacid']));
-		$data['com_total']=$data['com_total']*0.03;
+		
 		$data['com_total']=number_format($data['com_total'],2);
 		$data['profit_total']=number_format($data['profit_total'],2);
 		$data['profit_withdraw']=number_format($data['profit_withdraw'],2);

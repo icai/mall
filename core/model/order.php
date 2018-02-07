@@ -83,6 +83,7 @@ class Order_EweiShopV2Model
 		    $goods=pdo_fetch('select goodsid from '.tablename('ewei_shop_order_goods').' where orderid=:orderid',array(':orderid'=>$order_id['id']));
 			 $level_merch=pdo_fetchcolumn('select level_merch  from '.tablename('ewei_shop_goods').' where id=:id',array(':id'=>$goods['goodsid']));
 			 $profit=pdo_fetchcolumn('select profit  from '.tablename('ewei_shop_goods').' where id=:id',array(':id'=>$goods['goodsid']));
+			 $com2=pdo_fetchcolumn('select com  from '.tablename('ewei_shop_goods').' where id=:id',array(':id'=>$goods['goodsid']));
 			$this->ddd("level_merch:  ".$level_merch);
 			 $agents=pdo_fetch('select agentid,agentlevel,status from '.tablename('ewei_shop_member').' where openid=:openid and uniacid=:uniacid limit 1',array(':openid'=>$order['openid'],':uniacid'=>$_W['uniacid']));
 			 $this->ddd("agents:  ".$agents['status']);
@@ -154,9 +155,11 @@ class Order_EweiShopV2Model
 			$com_total=pdo_fetchcolumn('select com_total from ims_ewei_shop_member where id=:openid limit 1',array(':openid'=>$agents['id']));
 			$com_total=$com_total+$order['price'];
 			$profit_total=pdo_fetchcolumn('select profit_total from ims_ewei_shop_member where id=:openid limit 1',array(':openid'=>$agents['id']));
+			$com2_total=pdo_fetchcolumn('select com2_total from ims_ewei_shop_member where id=:openid limit 1',array(':openid'=>$agents['id']));
 			$profit_total=$profit_total+$profit;
+			$com2_total=$com2_total+$com2;
 			$this->ddd('com_total :   '.$com_total.'  profit_total:  '.$profit_total.'  agents[id]: '.$agents['id']);
-			pdo_update('ewei_shop_member',array('com_total'=>$com_total,'profit_total'=>$profit_total),array('id'=>$agents['id'],'uniacid'=>$_W['uniacid']));
+			pdo_update('ewei_shop_member',array('com_total'=>$com_total,'profit_total'=>$profit_total,'com2_total'=>$com2_total),array('id'=>$agents['id'],'uniacid'=>$_W['uniacid']));
 			}
 			$this->ddd('___________________________________________');
 			

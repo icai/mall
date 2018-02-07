@@ -70,6 +70,7 @@ if ($_W['ispost'])
 	
 	$data['level_merch']=$_GPC['level_merch'];
 	$data['profit']=$_GPC['profit'];
+	$data['com']=$_GPC['com'];
 	if (!empty($buyagain_commission)) 
 	{
 		$buyagain_commission['type'] = 0;
