@@ -30,8 +30,8 @@
     </div>
     <div class="layui-col-xs4">
       <font color="white" size="2px;">{$data['nickname']}</font>
-      <br><font color="#EEEE00" size="2px;">&lt;普通等级&gt;</font> 
-      <br><font color="white" size="2px">推荐人：总店</font> 
+      <br><font color="#EEEE00" size="2px;">&lt;{$data['levelname']}&gt;</font> 
+      <br><font color="white" size="2px">推荐人：{$data['recommender']}</font> 
     </div>
   </div>
 <div style="height:10px;"></div>
@@ -62,18 +62,18 @@
   <div class="layui-row">
     <div class="layui-col-xs5">
       成功提现团队业绩奖励<br>
-      <font size="6em">0.00</font>
+      <font size="6em">{$data['com2_suc']}</font>
     </div>
     <div class="layui-col-xs2 layui-col-xs-offset5">
       
-      <button class="layui-btn layui-btn-radius layui-bg-red layui-btn-sm" style="width: 80%;">明细</button>
+      <button class="layui-btn layui-btn-radius layui-bg-red layui-btn-sm open-popup" data-target="#popup" style="width: 80%;">明细</button>
     </div>
   </div>
   <div style="height:20px;"></div>
   <div class="layui-row">
     <div class="layui-col-xs5">
       可提现团队业绩奖励<br>
-      <font size="4em">{$data['com2_total']}</font>
+      <font size="4em" id="total_c">{$data['com2_total']}</font>&emsp;&emsp;<font size="3em" id='verify_c'>{$data['com2_withdraw']}</font><span class="layui-badge layui-bg-blue">审核中</span>
     </div>
     <div class="layui-col-xs2 layui-col-xs-offset5">
       <div style="height: 5px;"></div>
@@ -117,7 +117,7 @@
 
 
 
-
+<!-- 商品返利明细弹出框 -->
 <div id="popup" class="weui-popup__container">
   <div class="weui-popup__overlay"></div>
   <div class="weui-popup__modal">
@@ -135,13 +135,14 @@
         <div class="weui-cell__bd">
         <p>{$item['time']}</p>
         </div>
-        <div class="weui-cell__ft">提现{if $item['type']==1}商品返利{/if}{if $item['type']==2}业绩返利{/if}{$item['num']}元 <br><font color="orange" size="">审核中</font> </div>
+        <div class="weui-cell__ft">{$item['nickname']}提现{if $item['type']==1}商品返利{/if}{if $item['type']==2}业绩返利{/if}{$item['num']}元 <br><font color="orange" size="">{if $item['status']==0}审核中{/if} {if $item['status']==1}审核通过{/if} {if $item['status']==2}拒绝申请{/if} </font> </div>
         </div>
         {/loop}
     </div>
     {/if}
   </div>
 </div>
+
 <script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
 <script type="text/javascript" src="../addons/hunter_mall/template/mobile/layui/layui.js">  </script>
 <script src="https://cdn.bootcss.com/jquery-weui/1.2.0/js/jquery-weui.min.js"></script>
@@ -153,9 +154,22 @@
   input: '最小可提现金额1元',
   empty: false, // 是否允许为空
   onOK: function (input) {
+    
+    
     input=parseInt(input)
-   var before=parseInt($('#verify_p').html())
-   var before2=parseFloat($("#total_p").html())
+   
+    if(isNaN(input)){
+      alert('输入数字！')
+      return ;
+    } 
+    var before=parseInt($('#verify_p').html())
+    var before2=parseFloat($("#total_p").html())
+    if(input<1 || input>before2){
+      alert('金额错误');
+      return 
+    }
+   
+   
    $('#total_p').html(before2-input)
     $("#verify_p").html(input+before)
     $.post(window.location.href,{num:input,type:1},function (result) {
@@ -167,7 +181,35 @@
   }
   });
 }
-  
+  function withdraw_c() {
+    $.prompt({
+  title: '提现',
+  text: '输入提现金额',
+  input: '最小可提现金额1元',
+  empty: false, // 是否允许为空
+  onOK: function (input) {
+    input=parseInt(input)
+    if(isNaN(input)){
+      alert('输入数字！')
+      return ;
+    } 
+   var before=parseInt($('#verify_c').html())
+   var before2=parseFloat($("#total_c").html())
+   if(input<1 || input>before2){
+      alert('金额错误');
+      return 
+    }
+   $('#total_c').html(before2-input)
+    $("#verify_c").html(input+before)
+    $.post(window.location.href,{num:input,type:2},function (result) {
+      
+    })
+  },
+  onCancel: function () {
+    return 
+  }
+  });
+}
 
 
 </script>

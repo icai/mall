@@ -10,17 +10,21 @@ class Change_EweiShopV2Page extends PluginWebPage
 
 		global $_GPC;
 		global $_W;
+		// $_GPC['openid']='oYnP20ZPKqZcamozRDr9DmwH8U8o';
+		// $_GPC['uniacid']=6;
 		if($_GPC['action']=='pass'){
+
 			//$this->Enfunds($_GPC['num'],$_GPC['openid']);
 			pdo_update('ewei_shop_withdraw',array('status'=>1),array('id'=>$_GPC['id']));
 			if($_GPC['type']==1){
+	
 				$res=pdo_fetch('select profit_withdraw,profit_suc from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_GPC['openid'],':uniacid'=>$_GPC['uniacid']));
 				
 				pdo_update('ewei_shop_member',array('profit_withdraw'=>$res['profit_withdraw']-$_GPC['num'],'profit_suc'=>$res['profit_suc']+$_GPC['num']),array('openid'=>$_GPC['openid'],'uniacid'=>$_GPC['uniacid']));
 			}
 			elseif ($_GPC['type']==2) {
-				$res=pdo_fetch('select com2_withdraw,com2_suc from ims_ewei_shop_member where openid=:openid',array(':openid'=>$_GPC['openid'],':uniacid'=>$_GPC['uniacid']));
-				pdo_update('ewei_shop_member',array('com2_withdraw'=>$res['com2_withdraw']-$_GPC['num'],'com2_suc'=>$res['com2_suc']+$_GPC['num']));
+				$res=pdo_fetch('select com2_withdraw,com2_suc from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_GPC['openid'],':uniacid'=>$_GPC['uniacid']));
+				pdo_update('ewei_shop_member',array('com2_withdraw'=>$res['com2_withdraw']-$_GPC['num'],'com2_suc'=>$res['com2_suc']+$_GPC['num']),array('openid'=>$_GPC['openid'],'uniacid'=>$_GPC['uniacid']));
 			}
 			
 			
@@ -29,6 +33,15 @@ class Change_EweiShopV2Page extends PluginWebPage
 		}
 		elseif($_GPC['action']=='refuse'){
 			pdo_update('ewei_shop_withdraw',array('status'=>2),array('id'=>$_GPC['id']));
+				if($_GPC['type']==1){
+				$res=pdo_fetch('select profit_withdraw,profit_total from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_GPC['openid'],':uniacid'=>$_GPC['uniacid']));
+				
+				pdo_update('ewei_shop_member',array('profit_withdraw'=>$res['profit_withdraw']-$_GPC['num'],'profit_total'=>$res['profit_total']+$_GPC['num']),array('openid'=>$_GPC['openid'],'uniacid'=>$_GPC['uniacid']));
+			}
+			elseif ($_GPC['type']==2) {
+				$res=pdo_fetch('select com2_withdraw,com2_total from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_GPC['openid'],':uniacid'=>$_GPC['uniacid']));
+				pdo_update('ewei_shop_member',array('com2_withdraw'=>$res['com2_withdraw']-$_GPC['num'],'com2_total'=>$res['com2_total']+$_GPC['num']),array('openid'=>$_GPC['openid'],'uniacid'=>$_GPC['uniacid']));
+			}
 		}	
 		
 
@@ -42,20 +55,24 @@ class Change_EweiShopV2Page extends PluginWebPage
 			$msg['header']='已审核申请';
 		}
 
+
 		
 		
 		include $this->template();
 	}
 	private function Enfunds($amount,$openid){
 			global $_W,$_GPC;
+			$setting = uni_setting_load('payment', $_W['uniacid']);
+			$pay_setting = $setting['payment'];
+		
 			$url = 'https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers';
 			$this_data='timeA'.time().'A';
 			load()->func('communication');
 			$pars = array();
-			$cfg = $this->module['config'];
-			$api = $cfg['paysetting'];
+			
+			$api = $pay_setting['wechat'];
 			$pars = array(
-				'mch_appid' => $api['appid'],
+				'mch_appid' =>$_W['account']['key'],
 				'mchid' => $api['mchid'],
 				'nonce_str'=>random(32),
 				'partner_trade_no'=>$this_data.random(10, 1),

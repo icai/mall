@@ -19,7 +19,7 @@
 				<td>{$item['time']}</td>
 				<td><span class="label labelel-success">{if $item['status']==0}审核中{/if}{if $item['status']==1}通过{/if}{if $item['status']==2}已拒绝{/if}</span></td>	
 				{if $item['status']==0}	
-				<td><a class="btn btn-success btn-sm" href="{php echo webUrl('commission/change',array('action'=>'pass','num'=>$item['num'],'openid'=>$item['openid'],'type'=>$item['type'],'id'=>$item['id'],'status'=>1,'uniacid'=>$item['uniacid']))}">通过</a><a class="btn btn-warning btn-sm" href="{php echo webUrl('commission/change',array('action'=>'refuse','id'=>$item['id']))}">拒绝</a></td>
+				<td><a onclick="return  confirm('确定通过提现申请？');" class="btn btn-success btn-sm" href="{php echo webUrl('commission/change',array('action'=>'pass','num'=>$item['num'],'openid'=>$item['openid'],'type'=>$item['type'],'id'=>$item['id'],'status'=>1,'uniacid'=>$item['uniacid']))}">通过</a><a onclick="return confirm('拒绝提现申请？');" class="btn btn-warning btn-sm" href="{php echo webUrl('commission/change',array('action'=>'refuse','status'=>1,'openid'=>$item['openid'],'num'=>$item['num'],'type'=>$item['type'],'id'=>$item['id'],'uniacid'=>$item['uniacid']))}">拒绝</a></td>
 				{/if} 
 			</tr>
 			{/loop}
