@@ -1,0 +1,8 @@
+<xml>
+<return_code><![CDATA[SUCCESS]]></return_code>
+<return_msg><![CDATA[SIGN_ERROR]]></return_msg>
+<mchid><![CDATA[1495270792]]></mchid>
+<result_code><![CDATA[FAIL]]></result_code>
+<err_code><![CDATA[SIGN_ERROR]]></err_code>
+<err_code_des><![CDATA[签名错误]]></err_code_des>
+</xml>

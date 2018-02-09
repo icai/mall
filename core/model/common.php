@@ -331,8 +331,8 @@ class Common_EweiShopV2Model
 			$package['device_info'] = 'hunter_mall';
 			$package['out_trade_no'] = $params['tid'];
 			//我的修改
-			$package['total_fee']=1;
-			//$package['total_fee'] = $params['fee'] * 100;
+			
+			$package['total_fee'] = $params['fee'] * 100;
 			$package['fee_type'] = '1';
 			$package['notify_url'] = $_W['siteroot'] . 'addons/hunter_mall/payment/wechat/notify.php';
 			$package['spbill_create_ip'] = CLIENT_IP;
@@ -383,8 +383,8 @@ class Common_EweiShopV2Model
 		$package['device_info'] = 'hunter_mall';
 		$package['attach'] = $_W['uniacid'] . ':' . $type;
 		$package['out_trade_no'] = $params['tid'];
-		$package['total_fee']=1;
-		//$package['total_fee'] = $params['fee'] * 100;
+		
+		$package['total_fee'] = $params['fee'] * 100;
 		$package['spbill_create_ip'] = CLIENT_IP;
 		if (!empty($params['goods_tag'])) 
 		{
@@ -452,8 +452,8 @@ class Common_EweiShopV2Model
 		$package['attach'] = ((isset($params['uniacid']) ? $params['uniacid'] : $_W['uniacid'])) . ':' . $type;
 		$package['out_trade_no'] = $params['tid'];
 		//我的修改
-			$package['total_fee']=$params['fee'];
-			//$package['total_fee'] = $params['fee'] * 100;
+			
+		$package['total_fee'] = $params['fee'] * 100;
 		$package['spbill_create_ip'] = CLIENT_IP;
 		$package['product_id'] = $params['goods_id'];
 		if (!empty($params['goods_tag'])) 
@@ -535,8 +535,8 @@ class Common_EweiShopV2Model
 		$package['attach'] = ((isset($params['uniacid']) ? $params['uniacid'] : $_W['uniacid'])) . ':' . $type;
 		$package['out_trade_no'] = $params['tid'];
 		//我的修改
-			$package['total_fee']=1;
-			//$package['total_fee'] = $params['fee'] * 100;
+			
+		$package['total_fee'] = $params['fee'] * 100;
 		$package['spbill_create_ip'] = CLIENT_IP;
 		$package['product_id'] = $params['tid'];
 		if (!empty($params['goods_tag'])) 
@@ -598,8 +598,8 @@ class Common_EweiShopV2Model
 		$package['attach'] = ((isset($params['uniacid']) ? $params['uniacid'] : $_W['uniacid'])) . ':' . $type;
 		$package['out_trade_no'] = $params['tid'];
 		//我的修改
-			$package['total_fee']=$params['fee'];
-			//$package['total_fee'] = $params['fee'] * 100;
+			
+		$package['total_fee'] = $params['fee'] * 100;
 		$package['spbill_create_ip'] = CLIENT_IP;
 		$package['product_id'] = $params['tid'];
 		if (!empty($params['goods_tag'])) 
@@ -818,10 +818,10 @@ class Common_EweiShopV2Model
 		libxml_disable_entity_loader(true);
 		$result = json_decode(json_encode($xml), true);
 		//去掉验证
-		// if ($result['total_fee'] != $money * 100) 
-		// {
-		// 	return error(-1, '金额出错');
-		// }
+		if ($result['total_fee'] != $money * 100) 
+		{
+			return error(-1, '金额出错');
+		}
 		return $result;
 	}
 	public function getAccount() 

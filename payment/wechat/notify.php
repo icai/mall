@@ -48,9 +48,9 @@ class EweiShopWechatPay
 		$strs = explode(':', $this->get['attach']);
 		$this->type = intval($strs[1]);
 		//设置金额为订单内的金额
-		$this->total_fee=pdo_fetchcolumn('select price from ' . tablename('ewei_shop_order') . ' where ordersn=:id limit 1', array(':id' => $this->get['out_trade_no']));
+		//$this->total_fee=pdo_fetchcolumn('select price from ' . tablename('ewei_shop_order') . ' where ordersn=:id limit 1', array(':id' => $this->get['out_trade_no']));
 
-		//$this->total_fee = $this->get['total_fee'] / 100;
+		$this->total_fee = $this->get['total_fee'] / 100;
 		$_W['uniacid'] = $_W['weid'] = intval($strs[0]);
 		$this->init();
 	}
@@ -172,9 +172,9 @@ class EweiShopWechatPay
 		}
 		else 
 		{
-			return;
+			//return;
 			//修改金额
-			//$this->fail();
+			$this->fail();
 		}
 	}
 	public function recharge() 

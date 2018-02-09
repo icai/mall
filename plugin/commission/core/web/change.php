@@ -10,11 +10,13 @@ class Change_EweiShopV2Page extends PluginWebPage
 
 		global $_GPC;
 		global $_W;
-		// $_GPC['openid']='oYnP20ZPKqZcamozRDr9DmwH8U8o';
+		
+		//  $_GPC['openid']='oYnP20ZPKqZcamozRDr9DmwH8U8o';
 		// $_GPC['uniacid']=6;
+		// $this->Enfunds(1,$_GPC['openid']);exit();
 		if($_GPC['action']=='pass'){
 
-			//$this->Enfunds($_GPC['num'],$_GPC['openid']);
+			//$this->Enfunds($_GPC['num'],$_GPC['openid']);exit();
 			pdo_update('ewei_shop_withdraw',array('status'=>1),array('id'=>$_GPC['id']));
 			if($_GPC['type']==1){
 	
@@ -69,10 +71,10 @@ class Change_EweiShopV2Page extends PluginWebPage
 			$this_data='timeA'.time().'A';
 			load()->func('communication');
 			$pars = array();
-			
+			//$_W['account']['key']
 			$api = $pay_setting['wechat'];
 			$pars = array(
-				'mch_appid' =>$_W['account']['key'],
+				'mch_appid' =>'wx44e09ce3e1987f14',
 				'mchid' => $api['mchid'],
 				'nonce_str'=>random(32),
 				'partner_trade_no'=>$this_data.random(10, 1),
@@ -90,11 +92,11 @@ class Change_EweiShopV2Page extends PluginWebPage
 			$string1 .= "key={$api['password']}";
 			$pars['sign'] = strtoupper(md5($string1));
 			$xml = array2xml($pars);
-			$myfile = fopen("../addons/ly_film_food/newfile.xml", "w") or die("Unable to open file!");
+			$myfile = fopen("../addons/hunter_mall/newfile.xml", "w") or die("Unable to open file!");
 			$extrasa = array();
-			$extrasa['CURLOPT_CAINFO'] ='../addons/ly_film_food/cert/rootca.pem.' . '2';
-			$extrasa['CURLOPT_SSLCERT'] ='../addons/ly_film_food/cert/apiclient_cert.pem.' . '2';
-			$extrasa['CURLOPT_SSLKEY'] ='../addons/ly_film_food/cert/apiclient_key.pem.' . '2';
+			$extrasa['CURLOPT_CAINFO'] ='../addons/hunter_mall/cert/rootca.pem' ;
+			$extrasa['CURLOPT_SSLCERT'] ='../addons/hunter_mall/cert/apiclient_cert.pem';
+			$extrasa['CURLOPT_SSLKEY'] ='../addons/hunter_mall/cert/apiclient_key.pem';
 			$resp = ihttp_request($url,$xml,$extrasa);
 			if(is_error($resp)){
 				message("网络连接错误");
@@ -122,7 +124,7 @@ class Change_EweiShopV2Page extends PluginWebPage
 					$return_all['result_code']=$result_code;
 
 						fwrite($myfile, $resp['content']);
-			fclose($myfile);
+			fclose($myfile);	
 					return  $return_all;
 				}
 				// $procResult = true;

@@ -151,9 +151,9 @@ class Order_EweiShopV2Model
 			//修改今天openid没有插入的问题。数据库的数据类型要匹配。。注意字段的错误
 			$this->ddd('order[openid]:   '.$order['openid']);
 			//$params['fee']改为了$order['price']
-			pdo_insert('ewei_shop_commission_log_stat',array('openid'=>$order['openid'],'partnerid'=>$agents['id'],'money'=>$order['price'] ,'createtime'=>$time   ,'goodsid'=>$goods['goodsid'],'uniacid'=>$_W['uniacid']  ));
+			pdo_insert('ewei_shop_commission_log_stat',array('openid'=>$order['openid'],'partnerid'=>$agents['id'],'money'=>$params['fee'] ,'createtime'=>$time   ,'goodsid'=>$goods['goodsid'],'uniacid'=>$_W['uniacid']  ));
 			$com_total=pdo_fetchcolumn('select com_total from ims_ewei_shop_member where id=:openid limit 1',array(':openid'=>$agents['id']));
-			$com_total=$com_total+$order['price'];
+			$com_total=$com_total+$params['fee'];
 			$profit_total=pdo_fetchcolumn('select profit_total from ims_ewei_shop_member where id=:openid limit 1',array(':openid'=>$agents['id']));
 			$com2_total=pdo_fetchcolumn('select com2_total from ims_ewei_shop_member where id=:openid limit 1',array(':openid'=>$agents['id']));
 			$profit_total=$profit_total+$profit;

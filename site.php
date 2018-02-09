@@ -104,9 +104,17 @@ class hunter_mallModuleSite extends WeModuleSite
 		$data['com2_withdraw']=number_format($data['com2_withdraw'],2);
 		$data['com2_suc']=number_format($data['com2_suc'],2);
 		//是否为合伙人
-		$level_merch=pdo_fetch('select level_merch,levelname from '.tablename('ewei_shop_commission_level').' where uniacid=:uni and id=:id limit 1',array(':uni'=>$_W['uniacid'],':id'=>$data['agentlevel']));
+		if($data['agentlevel']==0){
+			$data['levelname']='普通等级';
+		}
+		else{
+			$level_merch=pdo_fetch('select level_merch,levelname from '.tablename('ewei_shop_commission_level').' where uniacid=:uni and id=:id limit 1',array(':uni'=>$_W['uniacid'],':id'=>$data['agentlevel']));
+			$data['levelname']=$level_merch['levelname'];
+		}
+		
+
 		//合伙人Id查询名下购买记录
-		$data['levelname']=$level_merch['levelname'];
+		
 		
 		if($level_merch['level_merch']==5){
 
