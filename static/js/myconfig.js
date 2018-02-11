@@ -18,6 +18,7 @@ var myconfig = {
         'echarts': 'dist/echarts/echarts-all',
         'toast': 'dist/jquery/toastr.min',
         'tpl': 'dist/tmodjs'
+
     },
     map: {
         'js': '.js?v=' + version,

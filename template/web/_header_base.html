@@ -14,6 +14,8 @@
         <link href="{php echo hunter_mall_LOCAL}static/css/v2.css?v=4.1.0" rel="stylesheet">
         <link href="{php echo hunter_mall_LOCAL}static/css/common.css?v=2.0.0" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="{php echo hunter_mall_LOCAL}static/fonts/iconfont.css?v=2016070717">
+        <link rel="stylesheet" type="text/css" href="./resource/components/webuploader/webuploader.css">
+        <link rel="stylesheet" type="text/css" href="./resource/components/webuploader/style.css">
         <script src="./resource/js/lib/jquery-1.11.1.min.js"></script>
         <script src="{php echo hunter_mall_LOCAL}static/js/dist/jquery/jquery.gcjs.js"></script>
         <script src="./resource/components/ueditor/ueditor.config.js"></script>
@@ -25,7 +27,12 @@
         <script src="./resource/js/app/config.js"></script>
         <script>
             require.config({
-                waitSeconds: 0
+                waitSeconds: 0,
+                map: {
+                "*": {
+                    "fileUploader": "../../../../addons/hunter_mall/static/js/dist/fileuploader.min"}
+                    } ,
+                 
             });
         </script>
         <script src="{php echo hunter_mall_LOCAL}static/js/myconfig.js"></script>
