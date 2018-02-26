@@ -3,7 +3,7 @@
     <label class="col-sm-2 form-control-static">商品详情</label>
     <div class="col-sm-11">
         {ife 'goods' $item}
-        {php echo tpl_ueditor('content',$item['content'],array('height'=>'300'))}
+        {php echo tpl_ueditor1('content',$item['content'],array('height'=>'300'))}
         {else}
         <textarea id='detail' style='display:none'>{$item['content']}</textarea>
         <a href='javascript:preview_html("#detail")' class="btn btn-default">查看内容</a>
