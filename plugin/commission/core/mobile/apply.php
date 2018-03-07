@@ -6,6 +6,7 @@ if (!defined('IN_IA'))
 require hunter_mall_PLUGIN . 'commission/core/page_login_mobile.php';
 class Apply_EweiShopV2Page extends CommissionMobileLoginPage 
 {
+	//提现申请第二步页面
 	public function main() 
 	{
 		global $_W;
@@ -153,7 +154,7 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 		{
 			$withdraw = 1;
 		}
-		//我的测试修改
+		//我的测试修改//
 		$commission_ok=100;
 		$cansettle = $withdraw <= $commission_ok;
 		$member['commission_ok'] = number_format($commission_ok, 2);
@@ -230,19 +231,20 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 		}
 		if ($_W['ispost']) 
 		{
-			if (empty($_SESSION['commission_apply_token'])) 
-			{
-				show_json(0, '不要短时间重复下提交!');
-			}
-			unset($_SESSION['commission_apply_token']);
-			if (($commission_ok <= 0) || empty($orderids)) 
-			{
-				show_json(0, '参数错误,请刷新页面后重新提交!');
-			}
+			// if (empty($_SESSION['commission_apply_token'])) 
+			// {
+			// 	show_json(0, '不要短时间重复下提交!');
+			// }
+			// unset($_SESSION['commission_apply_token']);
+			// if (($commission_ok <= 0) || empty($orderids)) 
+			// {
+			// 	show_json(0, '参数错误,请刷新页面后重新提交!');
+			// }
 			$type = intval($_GPC['type']);
+			
 			if (!array_key_exists($type, $type_array)) 
 			{
-				show_json(0, '未选择提现方式，请您选择提现方式后重试!');
+				show_json(0, '请选择提现方式');
 			}
 			$apply = array();
 			if ($type == 2) 
@@ -324,11 +326,12 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 			{
 				$mcommission .= ',实际到账金额:' . $realmoney . ',个人所得税金额:' . $deductionmoney;
 			}
-			$this->model->sendMessage($openid, array('commission' => $mcommission, 'type' => $apply_type[$apply['type']]), TM_COMMISSION_APPLY);
-			show_json(1, '已提交,请等待审核!');
+			//$this->model->sendMessage($openid, array('commission' => $mcommission, 'type' => $apply_type[$apply['type']]), TM_COMMISSION_APPLY);
+			//show_json(1, '已提交,请等待审核!');
+
 		}
-		$token = md5(microtime());
-		$_SESSION['commission_apply_token'] = $token;
+		// $token = md5(microtime());
+		// $_SESSION['commission_apply_token'] = $token;
 		include $this->template();
 	}
 }

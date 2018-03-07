@@ -59,6 +59,7 @@
             <th style="width:80px;">折扣</th>
 
             <th>升级条件</th>
+            <th>代理商等级</th>
             <th style="width:80px;">状态</th>
             <th>操作</th>
         </tr>
@@ -105,6 +106,11 @@
             {/if}
             {/if}
         </td>
+            
+                          {if $row['level_merch']=='0' }<td> 普通客户</td>{/if}
+                          {if $row['level_merch']=='1' } <td>核心代理</td>{/if}
+                          {if $row['level_merch']=='2' } <td>合伙人</td>{/if}
+
         <td>
             {if $row['id']!='default'}
             <span class='label {if $row['enabled']==1}label-success{else}label-default{/if}'

@@ -34,12 +34,11 @@
 						
                          {if $set['level']>=2}<td>{php echo number_format((float)$row['commission2'],2)}%</td>{/if}
                           {if $set['level']>=3}<td>{php echo number_format((float)$row['commission3'],2)}%</td>{/if}
-						  {if empty($row['level_merch'])||$row['level_merch']==0 }<td></td>{/if}
-						  {if $row['level_merch']=='1' }<td> 普通客户</td>{/if}
-						  {if $row['level_merch']=='2' } <td>体验代理</td>{/if}
-						  {if $row['level_merch']=='3' } <td>创业代理</td>{/if}
-						  {if $row['level_merch']=='4' } <td>核心代理</td>{/if}
-						  {if $row['level_merch']=='5' } <td>合伙人</td>{/if}
+						  
+						  {if $row['level_merch']=='0' }<td> 普通客户</td>{/if}
+						  {if $row['level_merch']=='1' } <td>核心代理</td>{/if}
+						  {if $row['level_merch']=='2' } <td>合伙人</td>{/if}
+			
                          <!--  <td>	{if $row['id']!='default'}
 						{if $leveltype==0}{if $row['ordermoney']>0}分销订单金额满 {$row['ordermoney']} 元 {else}不自动升级{/if}{/if}
 						{if $leveltype==1}{if $row['ordermoney']>0}一级分销订单金额满 {$row['ordermoney']} 元 {else}不自动升级{/if}{/if}

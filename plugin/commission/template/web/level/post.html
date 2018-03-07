@@ -191,11 +191,10 @@
 							
                                                             <div class='input-group'>
 
-                        <input type="radio" name="level_merch"  value="1" checked="{$level['level_merch']==1;}"  onclick="cha(this);" />普通客户
-                          <input type="radio" name="level_merch"  value="2" checked="{$level['level_merch']==2;}" onclick="cha(this);"/>体验代理
-                          <input type="radio" name="level_merch"  value="3" checked="{$level['level_merch']==3;}" onclick="cha(this);"/>创业代理
-                          <input type="radio" name="level_merch"  value="4" checked="{$level['level_merch']==4;}" onclick="cha(this);"/>核心代理
-                          <input type="radio" name="level_merch"  value="5" checked="{$level['level_merch']==5;}" onclick="cha(this);"/>合伙人
+                        <input type="radio" name="level_merch"  value="0" checked="{$level['level_merch']==0;}"  onclick="cha(this);" />普通客户
+       
+                          <input type="radio" name="level_merch"  value="1" checked="{$level['level_merch']==1;}" onclick="cha(this);"/>核心代理
+                          <input type="radio" name="level_merch"  value="2" checked="{$level['level_merch']==2;}" onclick="cha(this);"/>合伙人
                         </div>
 						
 	
@@ -227,17 +226,14 @@
 	function cha($name) {
 		switch($($name).attr('value'))
 		{
+			case '0':
+			$result='加入系统即为普通客户';break;
 			case '1':
-			$result='普通客户';break;
+			$result='核心代理等级';break;
 			case '2':
-			$result='购买3盒以上成为体验代理';break;
-			case '3':
-			$result='一次性购买30盒成为创业代理';break;
-			case '4':
-			$result='一次性购买120盒成为核心代理 ';break;
-			default:
-			$result=' 发展4个核心代理可以成为合伙人 ';
-			break;
+			$result='合伙人等级';break;
+			default: break;
+		
 
 		}
 		$('#des').html($result);

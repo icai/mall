@@ -779,6 +779,7 @@ class Apply_EweiShopV2Page extends PluginWebPage
 		plog('commission.apply.refuse', '驳回申请 ID: ' . $id . ' 申请编号: ' . $apply['applyno'] . ' ');
 		show_json(1, array('url' => webUrl('commission/apply', array('status' => 0))));
 	}
+	//后台查看申请详情后，执行付款
 	public function pay($params = array(), $mine = array()) 
 	{
 		global $_W;

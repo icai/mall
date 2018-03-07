@@ -46,6 +46,18 @@
             {/if}
         </div>
     </div>
+
+      <div class="form-group">
+        <label class="col-sm-2 control-label must"> 对应代理商等级</label>
+        <div class="col-sm-9 col-xs-12">
+            
+            <input type="radio" name="level_merch"  value="0" checked="{$level['level_merch']==0;}"  />普通客户
+       
+           <input type="radio" name="level_merch"  value="1" checked="{$level['level_merch']==1;}" />核心代理
+            <input type="radio" name="level_merch"  value="2" checked="{$level['level_merch']==2;}" />合伙人
+        </div>
+    </div>
+
     {if $id!='default'}
     <div class="form-group">
         <label class="col-sm-2 control-label">升级条件</label>
@@ -88,6 +100,9 @@
         </div>
     </div>
     {/if}
+
+
+
     <div class="form-group">
         <label class="col-sm-2 control-label">折扣</label>
         <div class="col-sm-9 col-xs-12">

@@ -18,17 +18,17 @@
         </div>
         <div class="userblock">
             <div class="line total">
-                <div class="title" style="color: {$diyitem['style']['textcolor']};">{$diyitem['params']['textsuccesswithdraw']}({$diyitem['params']['textyaun']})  </div>
+                <div class="title" style="color: {$diyitem['style']['textcolor']};">成功兑换分销返利积分  </div>
                 <div class="num" style="color: {$diyitem['style']['textcolor']};">{$diyitem['params']['successwithdraw']}  
     
                 </div>
             </div>
             <div class="line usable">
                
-                    <a class="btn" href="{$diyitem['params']['centernavlink']}" data-nocache="true">兑换余额</a>
+                    <a class="btn" href="{php echo mobileUrl('commission/apply')}" data-nocache="true">转入资金池</a>
            
                 <div class="text">
-                    <div class="title" style="color: {$diyitem['style']['textcolor']};">{$diyitem['params']['textcanwithdraw']}({$diyitem['params']['textyaun']})</div>
+                    <div class="title" style="color: {$diyitem['style']['textcolor']};">可兑换分销返利积分</div>
                     <div class="num" style="color: {$diyitem['style']['textcolor']};">{$diyitem['params']['canwithdraw']}</div>
                 </div>
             </div>

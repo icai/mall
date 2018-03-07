@@ -30,7 +30,7 @@ class Level_EweiShopV2Page extends WebPage
 			$params[':levelname'] = '%' . $_GPC['keyword'] . '%';
 		}
 		$others = pdo_fetchall('SELECT * FROM ' . tablename('ewei_shop_member_level') . ' WHERE 1 ' . $condition . ' ORDER BY level asc', $params);
-		$list = array_merge(array($default), $others);
+		$list = array_merge($others);
 		include $this->template();
 	}
 	public function add() 
@@ -60,7 +60,7 @@ class Level_EweiShopV2Page extends WebPage
 		if ($_W['ispost']) 
 		{
 			$enabled = intval($_GPC['enabled']);
-			$data = array('uniacid' => $_W['uniacid'], 'level' => intval($_GPC['level']), 'levelname' => trim($_GPC['levelname']), 'ordercount' => intval($_GPC['ordercount']), 'ordermoney' => $_GPC['ordermoney'], 'discount' => trim($_GPC['discount']), 'enabled' => $enabled);
+			$data = array('uniacid' => $_W['uniacid'], 'level' => intval($_GPC['level']), 'levelname' => trim($_GPC['levelname']), 'ordercount' => intval($_GPC['ordercount']), 'ordermoney' => $_GPC['ordermoney'], 'discount' => trim($_GPC['discount']), 'enabled' => $enabled,'level_merch'=>intval($_GPC['level_merch']));
 			if (!empty($id)) 
 			{
 				if ($id == 'default') 
