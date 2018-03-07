@@ -55,6 +55,7 @@ class DiypageModel extends PluginModel
 		return array('list' => $list, 'total' => $total, 'pager' => $pager);
 	}
 	public function getPage($id, $mobile = false) 
+
 	{
 		global $_W;
 		if (empty($id)) 
@@ -65,6 +66,7 @@ class DiypageModel extends PluginModel
 		if (!empty($page)) 
 		{
 			$page['data'] = base64_decode($page['data']);
+			
 			if ($mobile) 
 			{
 				$memberpage = (($page['type'] == 3 ? true : false));
@@ -525,6 +527,7 @@ class DiypageModel extends PluginModel
 					else if ($item['id'] == 'memberc') 
 					{
 						$member = $this->member;
+
 						$commission = $this->commission;
 						$item['params']['avatar'] = $member['avatar'];
 						$item['params']['nickname'] = $member['nickname'];
@@ -533,7 +536,8 @@ class DiypageModel extends PluginModel
 						$item['params']['textsuccesswithdraw'] = $commission['set']['texts']['commission_pay'];
 						$item['params']['textcanwithdraw'] = $commission['set']['texts']['commission_ok'];
 						$item['params']['successwithdraw'] = number_format($member['commission_pay'], 2);
-						$item['params']['canwithdraw'] = number_format($member['commission_ok'], 2);
+						//可提现金额$member['commission_ok']
+						$item['params']['canwithdraw'] = number_format(100, 2);
 						$item['params']['upname'] = $commission['set']['texts']['up'];
 						$item['params']['upmember'] = ((empty($member['up']) ? '总店' : $member['up']['nickname']));
 					}

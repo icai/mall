@@ -7,6 +7,7 @@ class Index_EweiShopV2Page extends PluginMobilePage
 {
 	public function main() 
 	{
+
 		global $_W;
 		global $_GPC;
 		$id = intval($_GPC['id']);
@@ -15,6 +16,7 @@ class Index_EweiShopV2Page extends PluginMobilePage
 			$this->message('请求参数错误！', mobileUrl());
 		}
 		$page = $this->model->getPage($id, true);
+		
 		if (empty($page)) 
 		{
 			$this->message('页面不存在！', mobileUrl());
@@ -44,8 +46,9 @@ class Index_EweiShopV2Page extends PluginMobilePage
 		}
 		$diyitems = $page['data']['items'];
 		$dd=pdo_fetch('SELECT com_total,profit_total FROM ' . tablename('ewei_shop_member') . ' WHERE openid = :id AND uniacid = :uniacid LIMIT 1', array(':id' => $_W['openid'], ':uniacid' => $_W['uniacid']));
-		
 		$this->model->setShare($page);
+
+		
 		include $this->template();
 	}
 }

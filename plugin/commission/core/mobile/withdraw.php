@@ -11,7 +11,11 @@ class Withdraw_EweiShopV2Page extends CommissionMobileLoginPage
 		global $_W;
 		global $_GPC;
 		$openid = $_W['openid'];
+		
+
 		$member = $this->model->getInfo($openid, array('total', 'ok', 'apply', 'check', 'lock', 'pay', 'wait', 'fail'));
+		//修改提现流程
+		$member['commission_ok']=100;
 		$cansettle = (1 <= $member['commission_ok']) && (floatval($this->set['withdraw']) <= $member['commission_ok']);
 		$agentid = $member['agentid'];
 		if (!empty($agentid)) 

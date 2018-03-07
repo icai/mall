@@ -1,4 +1,5 @@
 {if empty($diyitem['params']['style']) || $diyitem['params']['style']=='default1'}
+    
     <div class="headinfo commission" style="background-color: {$diyitem['style']['background']};">
         <div class="userinfo" style="border-bottom: 0.5px solid {$diyitem['style']['textcolor']};">
             <div class="fui-list">
@@ -23,9 +24,9 @@
                 </div>
             </div>
             <div class="line usable">
-                {if !empty($diyitem['params']['centernav'])}
-                    <a class="btn" href="{$diyitem['params']['centernavlink']}" data-nocache="true">{$diyitem['params']['centernav']}</a>
-                {/if}
+               
+                    <a class="btn" href="{$diyitem['params']['centernavlink']}" data-nocache="true">兑换余额</a>
+           
                 <div class="text">
                     <div class="title" style="color: {$diyitem['style']['textcolor']};">{$diyitem['params']['textcanwithdraw']}({$diyitem['params']['textyaun']})</div>
                     <div class="num" style="color: {$diyitem['style']['textcolor']};">{$diyitem['params']['canwithdraw']}</div>

@@ -184,6 +184,7 @@ class Route_EweiShopV2Model
 			$instance = new $class();
 			if (!method_exists($instance, $method)) 
 			{
+				var_dump($file);exit();
 				show_message('控制器 ' . $_W['controller'] . ' 方法 ' . $method . ' 未找到!');
 			}
 			$instance->$method();

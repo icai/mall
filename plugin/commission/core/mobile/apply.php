@@ -153,6 +153,8 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 		{
 			$withdraw = 1;
 		}
+		//我的测试修改
+		$commission_ok=100;
 		$cansettle = $withdraw <= $commission_ok;
 		$member['commission_ok'] = number_format($commission_ok, 2);
 		$set_array = array();
