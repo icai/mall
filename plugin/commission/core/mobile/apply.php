@@ -175,6 +175,7 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 		}
 		$last_data = $this->model->getLastApply($member['id']);
 		$type_array = array();
+		//cashcredit为到余额
 		if ($this->set['cashcredit'] == 1) 
 		{
 			$type_array[0]['title'] = $this->set['texts']['withdraw'] . '到' . $_W['shopset']['trade']['moneytext'];

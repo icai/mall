@@ -90,7 +90,8 @@ class Order_EweiShopV2Model
 		
 				
 			if($agents['level_merch']<$level_merch){
-			 $aa=pdo_update('ewei_shop_member',array('status'=>1,'isagent'=>1,'level_merch'=>$level_merch),array('uniacid'=>$_W['uniacid'],'openid'=>$order['openid']));
+				$agentlevel= pdo_fetchcolumn('select id from '.tablename('ewei_shop_commission_level').' where level_merch=:level_merch and uniacid=:uniacid limit 1',array(':level_merch'=>$level_merch,':uniacid'=>$_W['uniacid']));
+			 $aa=pdo_update('ewei_shop_member',array('status'=>1,'isagent'=>1,'level_merch'=>$level_merch,'agentlevel'=>$agentlevel),array('uniacid'=>$_W['uniacid'],'openid'=>$order['openid'],':uniacid'=>$_W['uniacid']));
 			}
 			//购买合伙人，给予9个核心代理名额
 			 if($level_merch==2{
@@ -102,7 +103,8 @@ class Order_EweiShopV2Model
 			$goods_num= pdo_fetch('select total from '.tablename('ewei_shop_order_goods').' where agentid=:agentid',array(':orderid'=>$order_id['id']));
 			pdo_update('ewei_shop_member',array('score_total'=>$score_total+$goods_num),array('uniacid'=>$_W['uniacid'],':agentid'=>$agents['agentid']));
 			 if(($score_total+$goods_num)>=100){
-			 	pdo_update('ewei_shop_member',array('level_merch'=>2),array('uniacid'=>$_W['uniacid'],':agentid'=>$agents['agentid']));
+			 	$agentlevel= pdo_fetchcolumn('select id from '.tablename('ewei_shop_commission_level').' where level_merch=:level_merch and uniacid=:uniacid limit 1',array(':level_merch'=>2,':uniacid'=>$_W['uniacid']));
+			 	pdo_update('ewei_shop_member',array('level_merch'=>2,'agentlevel'=>$agentlevel),array('uniacid'=>$_W['uniacid'],':agentid'=>$agents['agentid']));
 			 }
 			 //购买核心代理，给上线300直推奖励
 			 if($level_merch==1){

@@ -50,6 +50,8 @@
 					  <%/if%>
 				      
 				      </div>
+				      <%if user.level_merch==0%>
+				      <button class="btn btn-sm" onclick="bind(<%user.id%>,{$member['id']})" style="line-height: 0.9rem;height: 0.9rem;background: pink;">赠送核心代理</button><%/if%>
 				</div>
 				<div class="subtitle">
 				      <%if user.isagent==1 && user.status==1%>
@@ -70,7 +72,15 @@
 				<%/if%>
 				
 			</div>
+			<div class="row-remark">
+				<button class="btn btn-primary btn-sm" onclick="show('<%user.id%>')" id="btn-<%user.id%>" data-id="<%user.id%>">转赠</button>
+			</div>
+
 		</div>
+		<div id="div-<%user.id%>" style="display:none">  <font style="font-size: 0.8em;
+    color: darkgoldenrod;">可用资金池余额为：{php echo $member['credit2']}</font>   <br><font style="    font-size: 0.8em;
+    color: goldenrod;">转赠额：</font> <input type="number" style="height: 1rem;box-shadow: 1px 2px 8px 2px grey;" > &emsp;<button onclick="send(this,<%user.id%>,<%user.credit2%>)" class="btn btn-sm btn-success">确定</button><br><font style="display: none; font-size: 0.8em;
+    color: red;">请输入正确参数！</font></div>
 		<%/each%>
 	</script>
 
@@ -78,6 +88,46 @@
 		require(['../addons/hunter_mall/plugin/commission/static/js/down.js'], function (modal) {
 			modal.init({fromDetail: false});
 		});
+
+	</script>
+	<script type="text/javascript">
+	 function show(id) {
+			document.getElementById("div-"+id).style.display="";//显示
+	 	}	
+	function send(com,userid,usercredit) {
+		var data=$(com).prev().val()
+		console.log(data)
+		if(data==''||data==0){
+			$(com).next().next().show()
+			return;
+		}
+		var url="http://www.yunboweb.com/app/index.php?i=6&c=entry&m=hunter_mall&do=transfer";
+		
+		console.log({$member['credit2']}-data)
+		console.log(parseInt(usercredit)+parseInt(data))
+		$.post(url,{from:{$member['id']},from_num:{$member['credit2']}-data,to:userid,to_num:parseInt(usercredit)+parseInt(data)},function (data) {
+			console.log(data)
+			
+		})
+		$(com).next().next().html('请求成功！').css('color','blue').show()
+		setTimeout(()=>{
+			$(com).parent().toggle()
+			$(com).prev().val(0)
+			$(com).next().next().html('请输入正确参数！').css('color','red').css('display','none')
+			window.location.reload();
+		},2000)
+
+	}
+
+	function bind(userid,agentid) {
+		alert('确定将此人绑定为核心代理？');
+		$.post("http://www.yunboweb.com/app/index.php?i=6&c=entry&m=hunter_mall&do=transfer&id="+userid+"&agentid="+agentid,function (data) {
+				window.location.reload();
+		}
+			
+		);
+	}
+		
 	</script>
 </div>
 {php $this->footerMenus()}

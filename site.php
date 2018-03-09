@@ -70,7 +70,9 @@ class hunter_mallModuleSite extends WeModuleSite
 	public function doMobileShow()
 	{	
 		global $_W,$_GPC;
-		
+		//测试设定，需移除
+		$_W['openid']="oYnP20ZPKqZcamozRDr9DmwH8U8o";
+		$_W['uniacid']="6";
 
 		if($_W['isajax']){
 			if($_GPC['num']==0)
@@ -136,6 +138,26 @@ class hunter_mallModuleSite extends WeModuleSite
 		}
 		
 		include $this->template('show');
+	}
+	//转赠逻辑，合伙人赠送核心代理逻辑
+	public function doMobileTransfer()
+	{
+		global $_W,$_GPC;
+		if($_W['ispost']){
+			if(empty($_GPC['id'])){
+				pdo_update('ewei_shop_member',array('credit2'=>$_GPC['from_num']),array('id'=>$_GPC['from']));
+			pdo_update('ewei_shop_member',array('credit2'=>$_GPC['to_num']),array('id'=>$_GPC['to']));
+			return 'success';
+			}
+			else{
+				$agentlevel=pdo_fetchcolumn('select id from ims_ewei_shop_commission_level where level_merch=:level_merch and uniacid=:uniacid',array(":level_merch"=>1,":uniacid"=>$_W['uniacid']));
+				pdo_update('ewei_shop_member',array('level_merch'=>1,'agentlevel'=>$agentlevel),array('id'=>$_GPC['id']));
+				$agent_num=pdo_fetchcolumn('select agent_num from ims_ewei_shop_member where id=:id',array(':id'=>$_GPC['agentid']));
+				pdo_update('ewei_shop_member',array('agent_num'=>$agent_num-1),array('id'=>$_GPC['agentid']));
+				return 'bind success';
+			}
+			
+		}
 	}
 	
 	
