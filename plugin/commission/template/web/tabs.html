@@ -1,3 +1,5 @@
+<!-- 菜单栏部分页面 -->
+
 <div class='menu-header'>{php echo $this->plugintitle}</div>
 <ul>
     {ifp 'commission.agent'}<li {if $_W['routes']=='commission.agent'}class="active"{/if}><a href="{php echo webUrl('commission/agent')}">分销商管理</a></li>{/if}
@@ -31,8 +33,7 @@
 </ul>
 <div class='menu-header'>兑换申请</div>
 <ul class='commission-list'>
-  <li><a href="{php echo webUrl('commission/change',array('status'=>1))}">待审核申请<span  class='text-danger'>0</span></a></li>
-  <li><a href="{php echo webUrl('commission/change',array('status'=>2))}">已审核申请<span  class='text-danger'>0</span></a></li>
+  <li><a href="{php echo webUrl('commission/change',array('status'=>1))}">业绩积分<br>底线设定</a></li>
 </ul>
 <div class="menu-header">设置</div>
 

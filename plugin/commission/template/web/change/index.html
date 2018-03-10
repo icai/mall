@@ -1,30 +1,15 @@
 {template '_header'}
  <div class="panel panel-default">
 	<div class="panel-heading">
-		<h2>{$msg['header']}</h2>
+		<h2>业绩积分兑换底线设定</h2>
 	</div>
 	<div class="panel-body">
-		<table class="table table-striped">
-			<thead class="navbar-inner">
-				<tr>
-					<th>申请人</th><th>金额</th><th>提现类型</th><th style="width: 200px;">时间</th><th>状态</th><th>操作</th>
-				</tr>
-			</thead>
-			<tbody>
-				{loop $data $index $item}
-				<tr>
-				<td>{$item['nickname']}</td>
-				<td>{$item['num']}</td>
-				<td>{if $item['type']==1}商品返利{/if}{if $item['type']==2}业绩返利{/if}</td>
-				<td>{$item['time']}</td>
-				<td><span class="label labelel-success">{if $item['status']==0}审核中{/if}{if $item['status']==1}通过{/if}{if $item['status']==2}已拒绝{/if}</span></td>	
-				{if $item['status']==0}	
-				<td><a onclick="return  confirm('确定通过提现申请？');" class="btn btn-success btn-sm" href="{php echo webUrl('commission/change',array('action'=>'pass','num'=>$item['num'],'openid'=>$item['openid'],'type'=>$item['type'],'id'=>$item['id'],'status'=>1,'uniacid'=>$item['uniacid']))}">通过</a><a onclick="return confirm('拒绝提现申请？');" class="btn btn-warning btn-sm" href="{php echo webUrl('commission/change',array('action'=>'refuse','status'=>1,'openid'=>$item['openid'],'num'=>$item['num'],'type'=>$item['type'],'id'=>$item['id'],'uniacid'=>$item['uniacid']))}">拒绝</a></td>
-				{/if} 
-			</tr>
-			{/loop}
-			</tbody>
-		</table>
+		<form method="post">
+			<label> 设定底线</label><br>
+    	<input type="text" placeholder="设定底线" class="form-control" name="threshold" value="{$threshold}"><br>
+   		<input type="submit" name="submit" class="btn btn-primary">
+		</form>
+		
 	</div>
 </div> 
 {template '_footer'}  
