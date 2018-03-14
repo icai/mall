@@ -155,7 +155,7 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 			$withdraw = 1;
 		}
 		//我的测试修改//
-		$commission_ok=100;
+		//$commission_ok=100;
 		$cansettle = $withdraw <= $commission_ok;
 		$member['commission_ok'] = number_format($commission_ok, 2);
 		$set_array = array();
@@ -241,6 +241,8 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 			// {
 			// 	show_json(0, '参数错误,请刷新页面后重新提交!');
 			// }
+
+
 			$type = intval($_GPC['type']);
 			
 			if (!array_key_exists($type, $type_array)) 
@@ -304,7 +306,8 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 			}
 			foreach ($orderids as $o ) 
 			{
-				pdo_update('ewei_shop_order_goods', array('status' . $o['level'] => 1, 'applytime' . $o['level'] => $time), array('orderid' => $o['orderid'], 'uniacid' => $_W['uniacid']));
+				//订单的对应等级佣金也修改为2，原为1
+				pdo_update('ewei_shop_order_goods', array('status' . $o['level'] => 2, 'applytime' . $o['level'] => $time), array('orderid' => $o['orderid'], 'uniacid' => $_W['uniacid']));
 			}
 			$applyno = m('common')->createNO('commission_apply', 'applyno', 'CA');
 			$apply['uniacid'] = $_W['uniacid'];
@@ -313,7 +316,8 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 			$apply['mid'] = $member['id'];
 			$apply['commission'] = $commission_ok;
 			$apply['type'] = $type;
-			$apply['status'] = 1;
+			//由1修改为2，才能通过下面的请求的判断条件
+			$apply['status'] = 2;
 			$apply['applytime'] = $time;
 			$apply['realmoney'] = $realmoney;
 			$apply['deductionmoney'] = $deductionmoney;
@@ -327,8 +331,14 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 			{
 				$mcommission .= ',实际到账金额:' . $realmoney . ',个人所得税金额:' . $deductionmoney;
 			}
-			//$this->model->sendMessage($openid, array('commission' => $mcommission, 'type' => $apply_type[$apply['type']]), TM_COMMISSION_APPLY);
-			//show_json(1, '已提交,请等待审核!');
+			//请求付款的url，更新订单状态，和提现表的状态
+			$id=pdo_fetchcolumn('select id from ims_ewei_shop_commission_apply where applyno=:applyno',array(':applyno'=>$applyno));
+			
+			load()->func('communication');
+			$url='http://www.yunboweb.com/web/index.php?c=site&a=entry&m=hunter_mall&do=web&r=commission.apply.pay&id='.$id;
+			ihttp_post($url,array());
+			$this->model->sendMessage($openid, array('commission' => $mcommission, 'type' => $apply_type[$apply['type']]), TM_COMMISSION_APPLY);
+			show_json(1, '已提交,请等待审核!');
 
 		}
 		// $token = md5(microtime());
