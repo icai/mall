@@ -71,13 +71,13 @@ class hunter_mallModuleSite extends WeModuleSite
 	{	
 		global $_W,$_GPC;
 		//测试设定，需移除
-		$_W['openid']="oYnP20ZPKqZcamozRDr9DmwH8U8o";
-		$_W['uniacid']="6";
+		// $_W['openid']="oYnP20ZPKqZcamozRDr9DmwH8U8o";
+		// $_W['uniacid']="6";
 
 		if($_W['isajax']){
 			
 			$nickname=pdo_fetchcolumn('select nickname from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_W['openid'],':uniacid'=>$_W['uniacid']));
-			$res=pdo_fetchcolumn('select profit_suc,com2_suc from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_W['openid'],':uniacid'=>$_W['uniacid']));
+			$res=pdo_fetchcolumn('select profit_suc,com2_suc,award_suc from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_W['openid'],':uniacid'=>$_W['uniacid']));
 			if($_GPC['type']==1){
 				$num= $_GPC['num']-$res['profit_suc'];
 			}
@@ -101,6 +101,8 @@ class hunter_mallModuleSite extends WeModuleSite
 
 			pdo_update('ewei_shop_member',array('award'=>0,'award_suc'=>$_GPC['num']),array('openid'=>$_W['openid'],'uniacid'=>$_W['uniacid']));
 			}
+			$credit2=pdo_fetchcolumn('select credit2 from ims_ewei_shop_member where openid=:openid and uniacid=:uniacid',array(':openid'=>$_W['openid'],':uniacid'=>$_W['uniacid']));
+			pdo_update('ewei_shop_member',array('credit2'=>$num+$credit2),array('openid'=>$_W['openid'],'uniacid'=>$_W['uniacid']));
 			return 'success' ;
 		}
 		$threshold=pdo_fetchcolumn('select threshold from ims_ewei_shop_sysset where uniacid=:uni',array(':uni'=>$_W['uniacid']));
@@ -165,7 +167,8 @@ class hunter_mallModuleSite extends WeModuleSite
 			}
 			else{
 				$agentlevel=pdo_fetchcolumn('select id from ims_ewei_shop_commission_level where level_merch=:level_merch and uniacid=:uniacid',array(":level_merch"=>1,":uniacid"=>$_W['uniacid']));
-				pdo_update('ewei_shop_member',array('level_merch'=>1,'agentlevel'=>$agentlevel),array('id'=>$_GPC['id']));
+				$level=pdo_fetchcolumn('select id from ims_ewei_shop_member_level where level_merch=1');
+				pdo_update('ewei_shop_member',array('level_merch'=>1,'agentlevel'=>$agentlevel,'level'=>$level,'isagent'=>1,'status'=>1),array('id'=>$_GPC['id']));
 				$agent_num=pdo_fetchcolumn('select agent_num from ims_ewei_shop_member where id=:id',array(':id'=>$_GPC['agentid']));
 				pdo_update('ewei_shop_member',array('agent_num'=>$agent_num-1),array('id'=>$_GPC['agentid']));
 				$award=pdo_fetchcolumn('select award from ims_ewei_shop_member where id=:id',array(':id'=>$_GPC['agentid']));

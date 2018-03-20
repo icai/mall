@@ -35,6 +35,7 @@ class Down_EweiShopV2Page extends CommissionMobileLoginPage
 
 	public function get_list()
 	{
+		//$_GPC['level']确定取哪一级的下线
 		global $_W;
 		global $_GPC;
 		$openid = $_W['openid'];
@@ -100,8 +101,9 @@ class Down_EweiShopV2Page extends CommissionMobileLoginPage
 			$moneycount = pdo_fetchcolumn('select sum(og.realprice) from ' . tablename('ewei_shop_order_goods') . ' og ' . ' left join ' . tablename('ewei_shop_order') . ' o on og.orderid=o.id where o.openid=:openid  and o.status>=1 and o.uniacid=:uniacid limit 1', array(':uniacid' => $_W['uniacid'], ':openid' => $row['openid']));
 			$row['moneycount'] = number_format(floatval($moneycount), 2);
 			$row['createtime'] = date('Y-m-d H:i', $row['createtime']);
+			$row['level_level']=$level;
 		}
-
+	
 		unset($row);
 		show_json(1, array('list' => $list, 'total' => $total_level, 'pagesize' => $psize));
 	}

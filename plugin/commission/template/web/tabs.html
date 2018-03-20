@@ -23,14 +23,14 @@
 </style>
 
 {php $totals = p('commission')->getTotals()}
-<div class='menu-header'>提现申请</div>
+<!-- <div class='menu-header'>提现申请</div>
 <ul class='commission-list'>
     {ifp 'commission.apply.view1'}<li {if $_W['routes']=='commission.apply' && $_GPC['status']==1}class="active"{/if}><a href="{php echo webUrl('commission/apply',array('status'=>1))}">待审核的<span  class='text-danger'>{$totals['total1']}</span></a></li>{/if}
     {ifp 'commission.apply.view2'}<li {if $_W['routes']=='commission.apply' && $_GPC['status']==2}class="active"{/if}><a href="{php echo webUrl('commission/apply',array('status'=>2))}">待打款的<span>{$totals['total2']}</span></a></li>{/if}
     {ifp 'commission.apply.view3'}<li {if $_W['routes']=='commission.apply' && $_GPC['status']==3}class="active"{/if}><a href="{php echo webUrl('commission/apply',array('status'=>3))}">已打款的<span  class='text-success'>{$totals['total3']}</span></a></li>{/if}
     {ifp 'commission.apply.view_1'}<li {if $_W['routes']=='commission.apply' && $_GPC['status']==-1}class="active"{/if}><a href="{php echo webUrl('commission/apply',array('status'=>-1))}">无效的<span class='text-default'>{$totals['total_1']}</span></a></li>{/if}
     
-</ul>
+</ul> -->
 <div class='menu-header'>兑换申请</div>
 <ul class='commission-list'>
   <li><a href="{php echo webUrl('commission/change',array('status'=>1))}">业绩积分<br>底线设定</a></li>

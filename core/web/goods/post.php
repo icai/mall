@@ -44,7 +44,7 @@ foreach ($levels as &$l )
 	$l['key'] = 'level' . $l['id'];
 }
 unset($l);
-$levels = array_merge(array( array('id' => 0, 'key' => 'default', 'levelname' => (empty($_W['shopset']['shop']['levelname']) ? '默认会员' : $_W['shopset']['shop']['levelname'])) ), $levels);
+// $levels = array_merge(array( array('id' => 0, 'key' => 'default', 'levelname' => (empty($_W['shopset']['shop']['levelname']) ? '默认会员' : $_W['shopset']['shop']['levelname'])) ), $levels);
 $groups = m('member')->getGroups();
 $commission_level = pdo_fetchall('SELECT * FROM ' . tablename('ewei_shop_commission_level') . ' WHERE uniacid = \'' . $_W['uniacid'] . '\' ORDER BY commission1 asc');
 foreach ($commission_level as &$l ) 
@@ -71,6 +71,7 @@ if ($_W['ispost'])
 	$data['level_merch']=$_GPC['level_merch'];
 	$data['profit']=$_GPC['profit'];
 	$data['com']=$_GPC['com'];
+	$data['num_weight']=$_GPC['num_weight'];
 	if (!empty($buyagain_commission)) 
 	{
 		$buyagain_commission['type'] = 0;

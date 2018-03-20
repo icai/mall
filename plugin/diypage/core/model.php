@@ -537,7 +537,7 @@ class DiypageModel extends PluginModel
 						$item['params']['textcanwithdraw'] = $commission['set']['texts']['commission_ok'];
 						$item['params']['successwithdraw'] = number_format($member['commission_pay'], 2);
 						//可提现金额$member['commission_ok']
-						$item['params']['canwithdraw'] = number_format(100, 2);
+						$item['params']['canwithdraw'] = number_format($member['commission_ok'], 2);
 						$item['params']['upname'] = $commission['set']['texts']['up'];
 						$item['params']['upmember'] = ((empty($member['up']) ? '总店' : $member['up']['nickname']));
 					}

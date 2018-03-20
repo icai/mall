@@ -307,7 +307,7 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 			foreach ($orderids as $o ) 
 			{
 				//订单的对应等级佣金也修改为2，原为1
-				pdo_update('ewei_shop_order_goods', array('status' . $o['level'] => 2, 'applytime' . $o['level'] => $time), array('orderid' => $o['orderid'], 'uniacid' => $_W['uniacid']));
+				pdo_update('ewei_shop_order_goods', array('status' . $o['level'] => 3, 'applytime' . $o['level'] => $time), array('orderid' => $o['orderid'], 'uniacid' => $_W['uniacid']));
 			}
 			$applyno = m('common')->createNO('commission_apply', 'applyno', 'CA');
 			$apply['uniacid'] = $_W['uniacid'];
@@ -317,7 +317,7 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 			$apply['commission'] = $commission_ok;
 			$apply['type'] = $type;
 			//由1修改为2，才能通过下面的请求的判断条件
-			$apply['status'] = 2;
+			$apply['status'] = 3;
 			$apply['applytime'] = $time;
 			$apply['realmoney'] = $realmoney;
 			$apply['deductionmoney'] = $deductionmoney;
@@ -333,11 +333,12 @@ class Apply_EweiShopV2Page extends CommissionMobileLoginPage
 			}
 			//请求付款的url，更新订单状态，和提现表的状态
 			$id=pdo_fetchcolumn('select id from ims_ewei_shop_commission_apply where applyno=:applyno',array(':applyno'=>$applyno));
-			
-			load()->func('communication');
-			$url='http://www.yunboweb.com/web/index.php?c=site&a=entry&m=hunter_mall&do=web&r=commission.apply.pay&id='.$id;
-			ihttp_post($url,array());
+			m('finance')->pay($openid, $apply['type'], $realmoney, $apply['applyno'],  '佣金打款');
+			// load()->func('communication');
+			// $url='http://www.yunboweb.com/web/index.php?c=site&a=entry&m=hunter_mall&do=web&r=commission.apply.pay&id='.$id;
+			// ihttp_post($url,array());
 			$this->model->sendMessage($openid, array('commission' => $mcommission, 'type' => $apply_type[$apply['type']]), TM_COMMISSION_APPLY);
+			
 			show_json(1, '已提交,请等待审核!');
 
 		}

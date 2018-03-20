@@ -50,7 +50,8 @@
 					  <%/if%>
 				      
 				      </div>
-				      <%if user.level_merch==0%>
+				      <%if user.level_merch==0 && user.level_level==1%>
+		
 				      <button class="btn btn-sm" onclick="bind(<%user.id%>,{$member['id']})" style="line-height: 0.9rem;height: 0.9rem;background: pink;">赠送核心代理</button><%/if%>
 				</div>
 				<div class="subtitle">
@@ -81,6 +82,7 @@
     color: darkgoldenrod;">可用资金池余额为：{php echo $member['credit2']}</font>   <br><font style="    font-size: 0.8em;
     color: goldenrod;">转赠额：</font> <input type="number" style="height: 1rem;box-shadow: 1px 2px 8px 2px grey;" > &emsp;<button onclick="send(this,<%user.id%>,<%user.credit2%>)" class="btn btn-sm btn-success">确定</button><br><font style="display: none; font-size: 0.8em;
     color: red;">请输入正确参数！</font></div>
+
 		<%/each%>
 	</script>
 

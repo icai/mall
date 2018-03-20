@@ -11,9 +11,9 @@ class Route_EweiShopV2Model
 		global $_W;
 
 		//测试设定参数--待删除
-		$_W['openid']="oYnP20ZPKqZcamozRDr9DmwH8U8o";
-		$_W['uniacid']="6";
-		require_once IA_ROOT . '/addons/hunter_mall/core/inc/page.php';
+		// $_W['openid']="oYnP20ZPKqZcamozRDr9DmwH8U8o";
+		// $_W['uniacid']="6";
+		require_once IA_ROOT .  '/addons/hunter_mall/core/inc/page.php';
 		if ($isweb) 
 		{
 			require_once hunter_mall_CORE . 'inc/page_web.php';
